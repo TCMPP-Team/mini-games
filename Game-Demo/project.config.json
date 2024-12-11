@@ -1,0 +1,68 @@
+{
+	"projectid": "touristId_game-demo",
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": false,
+		"minified": true,
+		"newFeature": true,
+		"autoAudits": false,
+		"nodeModules": true,
+		"uploadWithSourceMap": true,
+		"uglifyFileName": false,
+		"remoteDebugLogEnable": true,
+		"prefetch": false,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"scriptsEnable": false
+	},
+	"TCMPPLibVersion": "2.0.13",
+	"compileType": "game",
+	"createTime": 1730701309105,
+	"accessTime": 1730701309105,
+	"packOptions": {
+		"ignore": [],
+		"include": []
+	},
+	"TCMPPappid": "touristId",
+	"projectname": "game-demo",
+	"appid": "wx231e6d0390f1a04a",
+	"libVersion": "3.6.5",
+	"editorSetting": {
+		"tabIndent": "insertSpaces",
+		"tabSize": 2
+	},
+	"scripts": {
+		"beforeCompile": "",
+		"beforePreview": "",
+		"beforeUpload": ""
+	},
+	"condition": {
+		"game": {
+			"current": -1,
+			"list": [
+				{
+					"id": 0,
+					"name": "update",
+					"query": "",
+					"scene": null
+				}
+			]
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": []
+		}
+	}
+}

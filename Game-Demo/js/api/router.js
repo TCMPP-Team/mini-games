@@ -62,11 +62,11 @@ const signIn = [
                         name: 'login',
                         path: 'abilityOpen/login/index',
                     },
-                    // {
-                    //     label: '获取用户信息',
-                    //     name: 'getUserInfo',
-                    //     path: 'abilityOpen/getUserInfo/index',
-                    // },
+                    {
+                        label: '获取用户信息',
+                        name: 'getUserInfo',
+                        path: 'abilityOpen/getUserInfo/index',
+                    },
                     // {
                     //     label: '转发',
                     //     name: 'onShareAppMessage',

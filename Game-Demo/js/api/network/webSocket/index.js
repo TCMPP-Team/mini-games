@@ -6,6 +6,29 @@ module.exports = function(PIXI, app, obj) {
             case 'connection':
                 wx.showLoading({ title: '连接中...', mask: true });
 
+                // 打开信道
+                var socketTask = wx.connectSocket({
+                    url: 'wss://echo.websocket.org',
+                    timeout: 5000,
+                    header: {
+                        'Origin': 'https://appservice.tmf.qq.com/',
+                        'content-type': 'application/json'
+                    }
+                });
+
+                socketTask.onOpen((res) => {
+                    console.log('====onOpen', res);
+                });
+                socketTask.onClose((res) => {
+                    console.log('====onClose', res);
+                });
+                socketTask.onMessage((res) => {
+                    console.log('====onMessage', res);
+                });
+                socketTask.onError((err) => {
+                    console.log('====onError', err);
+                });
+
                 wx.onSocketOpen(() => {
                     wx.hideLoading();
                     console.log('WebSocket 已连接');
@@ -29,15 +52,7 @@ module.exports = function(PIXI, app, obj) {
                     console.log('socket message:', message);
                 });
 
-                // 打开信道
-                wx.connectSocket({
-                    url: 'wss://echo.websocket.org',
-                    timeout: 5000,
-                    header: {
-                        'Origin': 'https://appservice.tmf.qq.com/',
-                        'content-type': 'application/json'
-                    }
-                });
+                
                 break;
             case 'disconnect':
                 wx.closeSocket({

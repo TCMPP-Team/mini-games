@@ -10,39 +10,73 @@ module.exports = function(PIXI, app, obj, callBack) {
         div = p_box(PIXI, {
             height: 400 * PIXI.ratio,
             y: underline.y + underline.height + 80 * PIXI.ratio
-        }),
-        prompt = p_text(PIXI, {
-            content: '未获取',
-            fontSize: 27 * PIXI.ratio,
-            fill: 0xbebebe,
-            align: 'center',
-            lineHeight: 45 * PIXI.ratio,
-            y: 200 * PIXI.ratio,
-            relative_middle: { containerWidth: obj.width }
-        }),
-        network_state_text = p_text(PIXI, {
-            content: '',
-            fontSize: 50 * PIXI.ratio,
-            align: 'center',
-            y: 205 * PIXI.ratio,
-            relative_middle: { containerWidth: obj.width }
         });
 
-    div.addChild(
-        p_text(PIXI, {
-            content: '当前位置经纬度',
-            fontSize: 30 * PIXI.ratio,
-            y: 50 * PIXI.ratio,
-            relative_middle: { containerWidth: div.width }
-        }),
-        prompt,
-        network_state_text
-    );
+        let locationInfo = {
+            longitude: '经度',
+            latitude: '纬度',
+            altitude: '高度',
+            speed: '速度',
+            accuracy: '位置精确度',
+            verticalAccuracy: '垂直精度',
+            horizontalAccuracy: '水平精度'
+        },
+        divDeploy = {
+            height: 0,
+            border: {
+                width: PIXI.ratio | 0,
+                color: 0xe5e5e5
+            },
+            y: underline.height + underline.y + 75 * PIXI.ratio
+        },
+        div_container = new PIXI.Container(),
+        div_container_child_arr = [];
+
+        for (let i = 0, arr = Object.keys(locationInfo), len = arr.length; i < len; i++) {
+            div_container_child_arr[i] = p_box(PIXI, {
+                height: 87 * PIXI.ratio,
+                border: {
+                    width: PIXI.ratio | 0,
+                    color: 0xe5e5e5
+                },
+                y: i && div_container_child_arr[i - 1].height + div_container_child_arr[i - 1].y - (PIXI.ratio | 0)
+            });
+    
+            div_container_child_arr[i].addChild(
+                p_text(PIXI, {
+                    content: locationInfo[arr[i]],
+                    fontSize: 34 * PIXI.ratio,
+                    x: 30 * PIXI.ratio,
+                    relative_middle: { containerHeight: div_container_child_arr[i].height }
+                }),
+                (locationInfo[arr[i]] = p_text(PIXI, {
+                    content: '未获取',
+                    fontSize: 34 * PIXI.ratio,
+                    fill: 0xbebebe,
+                    relative_middle: {
+                        containerWidth: div_container_child_arr[i].width,
+                        containerHeight: div_container_child_arr[i].height
+                    }
+                }))
+            );
+        }
+    
+        divDeploy.height = div_container_child_arr[div_container_child_arr.length - 1].y + div_container_child_arr[div_container_child_arr.length - 1].height;
+    
+        div = p_box(PIXI, divDeploy);
+        div_container.addChild(...div_container_child_arr);
+        div_container.mask = p_box(PIXI, {
+            width: div.width - 30 * PIXI.ratio,
+            height: divDeploy.height - 2 * PIXI.ratio,
+            x: 30 * PIXI.ratio
+        });
+        div.addChild(div_container, div_container.mask);
+
 
     let getLocationBtn = p_button(PIXI, {
         width: 300 * PIXI.ratio,
         height: 80 * PIXI.ratio,
-        y: 830 * PIXI.ratio,
+        y: 1000 * PIXI.ratio,
         radius: 5 * PIXI.ratio
     });
     getLocationBtn.myAddChildFn(
@@ -56,12 +90,14 @@ module.exports = function(PIXI, app, obj, callBack) {
     getLocationBtn.onClickFn(() => {
         callBack({
             status: 'getLocation',
-            drawFn(res) {
-                res.latitude = (res.latitude + '').split('.');
-                res.longitude = (res.longitude + '').split('.');
-                prompt.visible = false;
-                network_state_text.turnText(`E: ${res.longitude[0]+'°'+res.longitude[0]+'′'}   N: ${res.latitude[0]+'°'+res.latitude[0]+'′'}`);
-                network_state_text.visible = true;
+            drawFn(data) {
+                console.log('getLocation success', data);
+
+                for (let i = 0, arr = Object.keys(locationInfo), len = arr.length; i < len; i++) {
+                    locationInfo[arr[i]].turnColors(0x000000);
+                    locationInfo[arr[i]].turnText(`${data[arr[i]]}`);
+                }
+
             }
         });
     });
@@ -71,7 +107,7 @@ module.exports = function(PIXI, app, obj, callBack) {
         width: 300 * PIXI.ratio,
         alpha: 0,
         height: 80 * PIXI.ratio,
-        y: 930 * PIXI.ratio,
+        y: 1100 * PIXI.ratio,
         radius: 5 * PIXI.ratio
     });
     wipeData.myAddChildFn(
@@ -82,9 +118,11 @@ module.exports = function(PIXI, app, obj, callBack) {
         })
     );
     wipeData.onClickFn(() => {
-        if (prompt.visible) return;
-        prompt.visible = true;
-        network_state_text.visible = false;
+        for (let i = 0, arr = Object.keys(locationInfo), len = arr.length; i < len; i++) {
+            locationInfo[arr[i]].turnColors(0xbebebe);
+            locationInfo[arr[i]].turnText(`未获取`);
+        }
+
     });
     //清空“按钮”结束
 

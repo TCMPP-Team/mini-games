@@ -43,7 +43,7 @@ module.exports = function(PIXI, app, obj) {
             case 'readFile':
                 if(isSync) {
                     try {
-                        const res = fileSystemManager.readFileSync(`${wx.env.USER_DATA_PATH}/fileA/hello.txt`, 'utf-8');
+                        const res = fileSystemManager.readFileSync(`${wx.env.USER_DATA_PATH}/fileA/hello.txt`, 'utf-8', 5);
                         show.Modal(`同步获取文件成功，返回到内容是 “${res}”`, '同步读取文件成功');
                     } catch(err) {
                         show.Modal(err.toString(), '同步读取文件发生错误');
@@ -52,6 +52,7 @@ module.exports = function(PIXI, app, obj) {
                     fileSystemManager.readFile({
                         filePath: `${wx.env.USER_DATA_PATH}/fileA/hello.txt`,
                         encoding: 'utf-8',
+                        position: 5,
                         success(res) {
                             show.Modal(`异步获取文件成功，返回到内容是 “${res.data}”`, '异步读取文件成功');
                         },

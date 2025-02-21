@@ -1,4 +1,4 @@
-module.exports = function(PIXI, deploy = {}) {
+module.exports = function (PIXI, deploy = {}) {
     let {
         x = 0,
         y = 0,
@@ -17,7 +17,7 @@ module.exports = function(PIXI, deploy = {}) {
     } = deploy;
 
     function Text() {
-        (this.setPositionFn = function(deploy = {}) {
+        (this.setPositionFn = function (deploy = {}) {
             let { x: new_x, y: new_y, relative_middle: new_relative_middle } = deploy,
                 { containerWidth, containerHeight, point } = new_relative_middle || relative_middle;
 
@@ -30,21 +30,22 @@ module.exports = function(PIXI, deploy = {}) {
             );
         }).call(this);
 
-        this.turnColors = function(newColor) {
+        this.turnColors = function (newColor) {
             this.style.fill = Number.isNaN(+newColor) ? fill : +newColor;
         };
-        this.turnText = function(str, style) {
+        this.turnText = function (str, style) {
             this.toString.call(style) === '[object Object]' && Object.assign(this.style, style);
             this.text = str || content;
             this.setPositionFn();
         };
-        this.hideFn = function() {
+        this.hideFn = function () {
             this.visible = false;
         };
-        this.showFn = function() {
+        this.showFn = function () {
             this.visible = true;
         };
     }
+
     Text.prototype = new PIXI.Text(content, {
         fontSize: `${fontSize}px`,
         fill,

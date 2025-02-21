@@ -19,7 +19,7 @@
 		},
 		"scriptsEnable": false
 	},
-	"TCMPPLibVersion": "2.0.13",
+	"TCMPPLibVersion": "0.0.0",
 	"compileType": "game",
 	"createTime": 1730701309105,
 	"accessTime": 1730701309105,
@@ -42,12 +42,12 @@
 	},
 	"condition": {
 		"game": {
-			"current": -1,
+			"current": 0,
 			"list": [
 				{
 					"id": 0,
-					"name": "update",
-					"query": "",
+					"name": "update2",
+					"query": "pathName=createRewardedVideoAd",
 					"scene": null
 				}
 			]

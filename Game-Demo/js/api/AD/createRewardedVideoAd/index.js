@@ -3,6 +3,7 @@ import * as show from '../../../libs/show';
 
 module.exports = function (PIXI, app, obj) {
   let rewardedVideo;
+  let hasLoad = false;
 
   const codeObj = {
     1000: '后端接口调用失败',
@@ -16,6 +17,7 @@ module.exports = function (PIXI, app, obj) {
     1008: '广告单元已关闭'
   };
 
+  // 初始化广告
   const initAd = () => {
     rewardedVideo = wx.createRewardedVideoAd({
       adUnitId: Math.round(Math.random())
@@ -30,12 +32,9 @@ module.exports = function (PIXI, app, obj) {
     let { status, drawFn } = data;
     switch (status) {
       case 'createRewardedVideoAd':
-        // 初始化 init
         initAd();
-
-        // wx.hideLoading();
-        // drawFn(true);
-
+        drawFn();
+        hasLoad = false;
         // 监听激励视频错误事件
         // rewardedVideo.onError(res => {
         //   show.Modal(res?.errMsg || '激励广告加载失败', codeObj[res.errCode]);
@@ -45,27 +44,26 @@ module.exports = function (PIXI, app, obj) {
         // rewardedVideo.onLoad(() => {
         //   console.log("wx.createRewardedVideoAd.onLoad call -----------------");
         // });
-
-        // rewardedVideo.show().then(res => {
-        //   console.log("界---------------激励广告show成功", res);
-        // });
-
-        // 加载激励视频广告
-        rewardedVideo
-          .load()
-          .then(() => {
-            wx.hideLoading();
-            drawFn(true);
-          })
-          .catch(() => {
-            wx.hideLoading();
-            drawFn(false);
-          });
         break;
+      case 'load':
+        wx.showLoading({ title: "加载激励广告" });
+        rewardedVideo.load().then(() => {
+          wx.hideLoading();
+          hasLoad = true;
+          drawFn(true);
+        }).catch(() => {
+          wx.hideLoading();
+          drawFn(false);
+          hasLoad = false;
+        });
+        break
       case 'show':
         // 显示 激励视频广告
-        if (!rewardedVideo) {
+        if (!hasLoad) {
           initAd();
+          rewardedVideo.onLoad(() => {
+            drawFn(false); // 更新UI
+          })
         }
         rewardedVideo
           .show()

@@ -2,8 +2,8 @@ import { p_button, p_text } from '../../../libs/component/index';
 import fixedTemplate from '../../../libs/template/fixed';
 
 module.exports = function (PIXI, app, obj, callBack) {
-  let container = new PIXI.Container();
 
+  let container = new PIXI.Container();
   const { goBack, title, api_name, underline, logo, logoName } = fixedTemplate(PIXI, {
     obj,
     title: '激励视频广告',
@@ -50,33 +50,50 @@ module.exports = function (PIXI, app, obj, callBack) {
     })
   );
 
-  // 加载广告
+  wx.showLoading({ title: "初始化广告对象" });
+  callBack({
+    status: 'createRewardedVideoAd',
+    drawFn: () => {
+      tipText.turnText("已创建广告对象")
+      wx.hideLoading();
+    }
+  })
+
+  // 加载广告 load
   loadButton.onClickFn(() => {
     callBack({
-      status: 'createRewardedVideoAd',
+      status: 'load',
       drawFn: (success = false) => {
         tipText.turnText(success ? '激励广告初始化成功' : '广告初始化失败', { fill: success ? 0x53B47B : 0xDF5953 })
       }
     })
   });
 
-  // 展示广告
+  // 展示广告 show
   showButton.onClickFn(() => {
     showButton.isTouchable(false);
-    callBack({ status: 'show', drawFn: showButton.isTouchable.bind(null, true) });
+    callBack({
+      status: 'show', drawFn: (hasLoad = true, success = true) => {
+        if (!hasLoad) {
+          tipText.turnText(success ? '激励广告初始化成功' : '广告初始化失败', { fill: success ? 0x53B47B : 0xDF5953 })
+        }
+        showButton.isTouchable(true)
+      }
+    });
   });
 
-  // 初始化 激励视频广告组件 结束
+  // 退出页面
   goBack.callBack = () => {
     callBack({
       status: 'destroy',
       drawFn() {
-        window.router.getNowPage(page => {
-          if (!page.reload)
-            page.reload = function () {
-              logo.reloadImg({ src: 'images/logo.png' });
-            };
-        });
+        // window.router.getNowPage(page => {
+        //   if (!page.reload)
+        //     page.reload = function () {
+        //       logo.reloadImg({ src: 'images/logo.png' });
+        //     };
+        // });
+        window.router.delPage();
       }
     });
   };

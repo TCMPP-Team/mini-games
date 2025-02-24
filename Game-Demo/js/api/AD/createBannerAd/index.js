@@ -1,6 +1,7 @@
 import view from './view';
 import * as show from '../../../libs/show';
-module.exports = function(PIXI, app, obj) {
+
+module.exports = function (PIXI, app, obj) {
     let bannerAd;
     return view(PIXI, app, obj, data => {
         let { status, style, drawFn } = data;

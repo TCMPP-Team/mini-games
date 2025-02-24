@@ -390,11 +390,11 @@ const signIn = [
         label: '广告组件',
         name: 'AD',
         children: [
-          // {
-          //     label: 'banner 广告',
-          //     name: 'createBannerAd',
-          //     path: 'AD/createBannerAd/index',
-          // },
+          {
+            label: 'banner 广告',
+            name: 'createBannerAd',
+            path: 'AD/createBannerAd/index',
+          },
           // {
           //     label: 'grid 广告',
           //     name: 'createGridAd',

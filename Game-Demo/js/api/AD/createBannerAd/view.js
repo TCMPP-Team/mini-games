@@ -1,6 +1,6 @@
 import { p_button, p_text } from '../../../libs/component/index';
 import fixedTemplate from '../../../libs/template/fixed';
-module.exports = function(PIXI, app, obj, callBack) {
+module.exports = function (PIXI, app, obj, callBack) {
     let container = new PIXI.Container(),
         { goBack, title, api_name, underline, logo, logoName } = fixedTemplate(PIXI, {
             obj,

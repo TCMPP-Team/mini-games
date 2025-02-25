@@ -40,20 +40,15 @@
 		"beforePreview": "",
 		"beforeUpload": ""
 	},
+	"TCSASappid": "mg4x0ifahn9n6pyi",
+	"TCSASLibVersion": "0.0.0",
 	"condition": {
 		"game": {
-			"current": 1,
+			"current": 0,
 			"list": [
 				{
 					"id": 0,
-					"name": "rewardVideo",
-					"query": "pathName=createRewardedVideoAd",
-					"scene": null
-				},
-				{
-					"id": -1,
 					"name": "banner",
-					"pathName": "",
 					"query": "pathName=createBannerAd",
 					"scene": null
 				}
@@ -64,6 +59,14 @@
 			"list": []
 		},
 		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
 			"current": -1,
 			"list": []
 		},

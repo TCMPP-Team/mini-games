@@ -26,6 +26,7 @@ module.exports = function (PIXI, app, obj) {
           bannerAd.show();
           drawFn(); // 更新UI
         });
+
         // 监听 banner 广告错误事件。
         bannerAd.onError(res => {
           wx.hideLoading();
@@ -37,6 +38,17 @@ module.exports = function (PIXI, app, obj) {
         // 隐藏 banner 广告
         bannerAd.hide();
         drawFn(); // 更新UI
+        break;
+      case 'resize':
+        bannerAd.onResize(res => {
+          console.log("设置的新size ---------------", res.width + Math.random() * 1);
+          bannerAd.style.width = res.width + Math.random() * 1;
+        });
+        bannerAd.style.top = 100;
+        bannerAd.style.left = 10;
+        // bannerAd.style.height = 10;
+        bannerAd.style.width = 120;
+        drawFn();
         break;
       case 'show':
         // 显示 banner 广告

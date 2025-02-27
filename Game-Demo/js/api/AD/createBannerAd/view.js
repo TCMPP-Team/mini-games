@@ -48,6 +48,14 @@ module.exports = function (PIXI, app, obj, callBack) {
     y: hideButton.height + hideButton.y + 22 * PIXI.ratio
   });
 
+  const modifyAdButton = p_button(PIXI, {
+    width: 576 * PIXI.ratio,
+    height: 90 * PIXI.ratio,
+    border: { width: 2 * PIXI.ratio, color: 0xd1d1d1 },
+    alpha: 0,
+    y: destroyButton.height + destroyButton.y + 22 * PIXI.ratio
+  });
+
   tipText.hideFn();
 
   // 点击展示 “按钮” 开始
@@ -75,6 +83,7 @@ module.exports = function (PIXI, app, obj, callBack) {
         tipText.showFn();
         hideButton.showFn();
         destroyButton.showFn();
+        modifyAdButton.showFn();
       }
     });
   });
@@ -129,6 +138,7 @@ module.exports = function (PIXI, app, obj, callBack) {
       relative_middle: { containerWidth: destroyButton.width, containerHeight: destroyButton.height }
     })
   );
+
   destroyButton.onClickFn(() => {
     callBack({
       status: 'destroy',
@@ -136,6 +146,7 @@ module.exports = function (PIXI, app, obj, callBack) {
         destroyButton.hideFn();
         showButton.hideFn();
         hideButton.hideFn();
+        modifyAdButton.hideFn();
         tipText.hideFn();
         bannerAdButton.showFn();
       }
@@ -144,11 +155,26 @@ module.exports = function (PIXI, app, obj, callBack) {
   destroyButton.hideFn();
   // 销毁 banner 广告 “按钮” 结束
 
+  modifyAdButton.myAddChildFn(
+    p_text(PIXI, {
+      content: `修改广告大小`,
+      fontSize: 36 * PIXI.ratio,
+      relative_middle: { containerWidth: modifyAdButton.width, containerHeight: modifyAdButton.height }
+    })
+  );
+
+  modifyAdButton.onClickFn(() => {
+    callBack({
+      status: 'resize',
+      drawFn() {
+        console.log("resize callback");
+      }
+    });
+  });
+
+  modifyAdButton.hideFn();
   goBack.callBack = callBack.bind(null, { status: 'destroy' });
-
-  container.addChild(goBack, title, api_name, underline, bannerAdButton, tipText, hideButton, showButton, destroyButton, logo, logoName);
-
+  container.addChild(goBack, title, api_name, underline, bannerAdButton, tipText, hideButton, showButton, destroyButton, modifyAdButton, logo, logoName);
   app.stage.addChild(container);
-
   return container;
 };

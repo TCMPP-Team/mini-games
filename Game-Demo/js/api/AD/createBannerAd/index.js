@@ -23,7 +23,11 @@ module.exports = function (PIXI, app, obj) {
         bannerAd.onLoad(() => {
           wx.hideLoading();
           // 需要主动调用show函数banner 广告才会显示
-          bannerAd.show();
+          bannerAd.show().catch(err => {
+            wx.hideLoading();
+            show.Modal(err.errMsg, '发生错误');
+            drawFn(err); // 更新UI
+          });
           drawFn(); // 更新UI
         });
 

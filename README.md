@@ -4,12 +4,14 @@ Tencent Cloud mini program platform, derived from Tencent mini program technolog
 
 ## TCMPP Official website
 - Game-Demo: Official example demo, including a large number of APIs
+- Cocos-HopInCar: "Hop in the Car", a 3D casual mini-game
 
 ## Directory description
 
 ````
-./Game-demo  -- main demo, Officical demo
-./README.md    -- README.md
+./Game-demo      -- main demo, API call examples of Mini-game
+./Cocos-HopInCar -- a 3D casual mini-game
+./README.md      -- README.md
 ````
 
 ## TCMPP Official website

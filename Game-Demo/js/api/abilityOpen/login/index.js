@@ -1,5 +1,5 @@
 import view from './view';
-module.exports = function(PIXI, app, obj) {
+module.exports = function (PIXI, app, obj) {
     return view(PIXI, app, obj, data => {
         let { status, drawFn } = data;
         switch (status) {
@@ -16,17 +16,17 @@ module.exports = function(PIXI, app, obj) {
                         }
                     },
                     fail: err => {
-                      wx.showModal({
-                        title: 'login failed',
-                        content: JSON.stringify(err),
-                        complete: (res) => {
-                         
-                        }
-                      })
-                      console.log('login fail', err);
+                        wx.showModal({
+                            title: 'login failed',
+                            content: JSON.stringify(err),
+                            complete: (res) => {
+
+                            }
+                        })
+                        console.log('login fail', err);
                     },
                     complete: result => {
-                      console.log('login complete', result);
+                        console.log('login complete', result);
                     }
                 });
                 break;

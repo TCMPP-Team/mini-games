@@ -7,23 +7,55 @@ module.exports = function(PIXI, app, obj, callBack) {
             title: '键盘',
             api_name: 'showKeyboard/hideKeyboard'
         }),
+
+        // 显示默认键盘（文本输入键盘），type为 text 
         showButton = p_button(PIXI, {
             width: 580 * PIXI.ratio,
             y: underline.height + underline.y + 123 * PIXI.ratio
+        }),
+
+        // 显示数字键盘，type为 number
+        showNumberButton = p_button(PIXI, {
+          width: 580 * PIXI.ratio,
+          y: underline.height + underline.y + 240 * PIXI.ratio
+        }),
+
+        // 显示带小数点的数字键盘，type为 digit
+        showDigitButton = p_button(PIXI, {
+          width: 580 * PIXI.ratio,
+          y: underline.height + underline.y + 360 * PIXI.ratio
         });
     let hideButton = p_button(PIXI, {
         width: 580 * PIXI.ratio,
-        y: underline.height + underline.y + 240 * PIXI.ratio
+        y: underline.height + underline.y + 480 * PIXI.ratio
     });
 
     // 点击更新 “按钮” 开始
     showButton.myAddChildFn(
         p_text(PIXI, {
-            content: `显示键盘`,
+            content: `显示默认键盘`,
             fontSize: 36 * PIXI.ratio,
             fill: 0xffffff,
             relative_middle: { containerWidth: showButton.width, containerHeight: showButton.height }
         })
+    );
+
+    showNumberButton.myAddChildFn(
+      p_text(PIXI, {
+          content: `显示数字键盘`,
+          fontSize: 36 * PIXI.ratio,
+          fill: 0xffffff,
+          relative_middle: { containerWidth: showButton.width, containerHeight: showButton.height }
+      })
+    );
+
+    showDigitButton.myAddChildFn(
+      p_text(PIXI, {
+          content: `显示带小数点的数字键盘`,
+          fontSize: 36 * PIXI.ratio,
+          fill: 0xffffff,
+          relative_middle: { containerWidth: showNumberButton.width, containerHeight: showNumberButton.height }
+      })
     );
 
     hideButton.myAddChildFn(
@@ -39,6 +71,24 @@ module.exports = function(PIXI, app, obj, callBack) {
         callBack({
             status: 'showKeyboard',
         });
+    });
+
+    showNumberButton.onClickFn(() => {
+      callBack({
+          status: 'showKeyboard',
+          params: {
+            type: 'number'
+          }
+      });
+    });
+
+    showDigitButton.onClickFn(() => {
+      callBack({
+          status: 'showKeyboard',
+          params: {
+            type: 'digit'
+          }
+      });
     });
 
     hideButton.onClickFn(() => {
@@ -87,7 +137,7 @@ module.exports = function(PIXI, app, obj, callBack) {
 
     goBack.callBack = callBack.bind(null, { status: 'destroy' });
 
-    container.addChild(goBack, title, api_name, underline, showButton, hideButton, emptyBtn, updateBtn, logo, logoName);
+    container.addChild(goBack, title, api_name, underline, showButton, showNumberButton, showDigitButton, hideButton, emptyBtn, updateBtn, logo, logoName);
 
     app.stage.addChild(container);
 

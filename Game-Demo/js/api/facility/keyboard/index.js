@@ -20,7 +20,7 @@ module.exports = function(PIXI, app, obj) {
   wx.onKeyboardComplete(keyboardCompleteListener);
 
     return view(PIXI, app, obj, data => {
-        let { status } = data;
+        let { status, params } = data;
 
         switch (status) {
             case 'showKeyboard':
@@ -31,6 +31,7 @@ module.exports = function(PIXI, app, obj) {
                   defaultValue: 'defaultValue',
                   maxLength: 1000,
                   multiple: false,
+                  type: params?.type,
                   success: res => {
                     console.log('showKeyboard success', res);
                   },

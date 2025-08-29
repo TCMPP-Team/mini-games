@@ -65,6 +65,7 @@ module.exports = function(PIXI, app, obj, callBack) {
                         '2g': '2g',
                         '3g': '3g',
                         '4g': '4g',
+                        '5g': '5g',
                         unknown: '不常见的未知网络',
                         none: '无网络'
                     }[res.networkType]

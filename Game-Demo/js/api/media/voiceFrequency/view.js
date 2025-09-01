@@ -204,7 +204,7 @@ module.exports = function(PIXI, app, obj, callBack) {
     });
 
     box.addChild(timerText, progressBar.gray, progressBar.green, progressBar.circle, startingTime, finishTime);
-    container.addChild(goBack, title, api_name, underline, box, hint, stopButton, playButton, pauseButton, logo, logoName);
+    container.addChild(goBack, title, api_name, underline, box, stopButton, playButton, pauseButton, logo, logoName);
     app.stage.addChild(container);
 
     return container;
